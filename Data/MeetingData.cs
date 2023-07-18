@@ -23,10 +23,16 @@ public class MeetingData : IMeetingData
 
   public Task<IEnumerable<MeetingModel>> GetMeetings()
   {
-    String statement = @"
-      SELECT * FROM meetings;
-    ";
+    var statement = "SELECT * FROM meetings";
 
     return _db.LoadData<MeetingModel, dynamic>(statement, new { }, "CityScrapeDb");
+  }
+
+  public async Task<MeetingModel?> GetMeeting(int id)
+  {
+    var statement = "SELECT * FROM meetings WHERE id = @Id";
+
+    var results = await _db.LoadData<MeetingModel, dynamic>(statement, new { Id = id }, "CityScrapeDb");
+    return results.FirstOrDefault();
   }
 }
