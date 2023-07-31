@@ -7,9 +7,9 @@ namespace DataAccess.Data;
 
 public class MeetingData : IMeetingData
 {
-  private readonly ISqlDataAccess _db;
+  private readonly IPostgresAccess _db;
 
-  public MeetingData(ISqlDataAccess db)
+  public MeetingData(IPostgresAccess db)
   {
     // DI
     _db = db;

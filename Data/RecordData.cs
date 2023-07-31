@@ -7,9 +7,9 @@ namespace DataAccess.Data;
 
 public class RecordData : IRecordData
 {
-  private readonly ISqlDataAccess _db;
+  private readonly IPostgresAccess _db;
 
-  public RecordData(ISqlDataAccess db)
+  public RecordData(PostgresAccess db)
   {
     // DI
     _db = db;

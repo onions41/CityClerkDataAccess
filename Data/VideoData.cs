@@ -6,9 +6,9 @@ using DataAccess.Mapping;
 namespace DataAccess.Data;
 
 public class VideoData : IVideoData {
-  private readonly ISqlDataAccess _db;
+  private readonly IPostgresAccess _db;
 
-  public VideoData(ISqlDataAccess db) {
+  public VideoData(IPostgresAccess db) {
     // DI
     _db = db;
     // Maps model property names to database column names
@@ -19,7 +19,7 @@ public class VideoData : IVideoData {
   }
 
   public async Task<uint> InsertVideo(VideoModel video) {
-    var statement = "INSERT INTO videos (url) VALUES (@Url) RETURNING id;";
+    var statement = "INSERT INTO videos (url) VALUES (@Url) RETURNING videos.id";
 
     return await _db.InsertAndReturnId(
       statement,
