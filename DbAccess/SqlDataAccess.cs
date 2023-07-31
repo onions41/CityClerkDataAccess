@@ -1,22 +1,12 @@
-using System.Data;
-using Microsoft.Extensions.Configuration;
-using Dapper;
 using MySqlConnector;
+using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccess.DbAccess;
 
-// This will talk to SQL using Dapper
-// We will create a generic interface for this so the code doesn't have to
-// contain all the setup and teardown of talking to SQL
-
-public class SqlDataAccess : ISqlDataAccess
-
-// Extract the interface later to use it in dependency injection
-{
+public class SqlDataAccess : ISqlDataAccess {
   private readonly IConfiguration _config;
-
-  public SqlDataAccess(IConfiguration config)
-  {
+  public SqlDataAccess(IConfiguration config) {
     _config = config;
   }
 
@@ -41,12 +31,20 @@ public class SqlDataAccess : ISqlDataAccess
   public async Task SaveData<T>(
     string statement,
     T parameters,
-    string connectionId = "Default")
-  {
+    string connectionId = "Default"
+  ) {
     using MySqlConnection connection = new MySqlConnection(_config.GetConnectionString(connectionId));
-
     await connection.ExecuteAsync(statement, parameters);
+
     // https://youtu.be/dwMFg6uxQ0I?t=3233
   }
-}
 
+  public async Task<uint> InsertAndReturnId<T>(
+    string statement,
+    T parameters,
+    string connectionId = "Default"
+  ) {
+    using MySqlConnection connection = new MySqlConnection(_config.GetConnectionString(connectionId));
+    return await connection.QuerySingleAsync<uint>(statement, parameters);
+  }
+}

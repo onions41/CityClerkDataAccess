@@ -17,22 +17,22 @@ public class RecordData : IRecordData
     FluentMapper.Initialize(config =>
     {
       config.AddConvention<PascalToSnakeConvention>()
-        .ForEntity<RecordModel>();
+        .ForEntity<DocumentModel>();
     });
   }
 
-  public Task<IEnumerable<RecordModel>> GetRecords(int meetingId)
+  public Task<IEnumerable<DocumentModel>> GetRecords(int meetingId)
   {
     var statement = "SELECT * FROM records WHERE meeting_id = @MeetingId";
 
-    return _db.LoadData<RecordModel, dynamic>(statement, new { MeetingId = meetingId }, "CityScrapeDb");
+    return _db.LoadData<DocumentModel, dynamic>(statement, new { MeetingId = meetingId }, "CityScrapeDb");
   }
 
-  public async Task<RecordModel?> GetRecord(int id)
+  public async Task<DocumentModel?> GetRecord(int id)
   {
     var statement = "SELECT * FROM records WHERE id = @Id";
 
-    var results = await _db.LoadData<RecordModel, dynamic>(statement, new { Id = id }, "CityScrapeDb");
+    var results = await _db.LoadData<DocumentModel, dynamic>(statement, new { Id = id }, "CityScrapeDb");
     return results.FirstOrDefault();
   }
 }

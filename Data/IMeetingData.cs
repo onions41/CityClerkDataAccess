@@ -6,4 +6,5 @@ public interface IMeetingData
 {
   Task<MeetingModel?> GetMeeting(int id);
   Task<IEnumerable<MeetingModel>> GetMeetings();
+  Task InsertMeeting(MeetingModel meeting);
 }

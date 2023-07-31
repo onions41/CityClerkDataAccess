@@ -35,4 +35,21 @@ public class MeetingData : IMeetingData
     var results = await _db.LoadData<MeetingModel, dynamic>(statement, new { Id = id }, "CityScrapeDb");
     return results.FirstOrDefault();
   }
+
+  public async Task InsertMeeting(MeetingModel meeting)
+  {
+    var statement = "INSERT INTO meetings (municipality_name, type, date, url) VALUES (@MunicipalityName, @Type, @Date, @Url);";
+
+    await _db.SaveData(
+      statement,
+      new
+      {
+        MunicipalityName = meeting.MunicipalityName,
+        Type = meeting.Type,
+        Date = meeting.Date, // The date needs to be converted into a string probably, or dapper maybe able to handle it,
+        Url = meeting.Url
+      },
+      "CityClerkDb"
+    );
+  }
 }
