@@ -1,10 +1,10 @@
 /*
   CREATE TABLE documents (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
 
     url VARCHAR(2048),
     fingerprint CHAR(100) NOT NULL UNIQUE,
-    content MEDIUMTEXT NOT NULL
+    content TEXT
   );
 */
 
@@ -14,5 +14,5 @@ public class DocumentModel {
   public uint? Id { get; set; }
   public string? Url { get; set; }
   public required string Fingerprint { get; set; }
-  public required string Content { get; set; }
+  public string? Content { get; set; }
 }
