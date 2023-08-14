@@ -4,7 +4,7 @@ namespace DataAccess.Data;
 
 public interface IMeetingData
 {
-  Task<MeetingModel?> GetMeeting(int id);
-  Task<IEnumerable<MeetingModel>> GetMeetings();
-  Task InsertMeeting(MeetingModel meeting);
+   Task<MeetingModel?> GetMeeting(int id);
+   Task<IEnumerable<MeetingModel>> GetMeetings();
+   Task<int?> InsertMeeting(MeetingModel meeting);
 }
