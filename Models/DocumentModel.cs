@@ -11,8 +11,11 @@
 namespace DataAccess.Models;
 
 public class DocumentModel {
-  public uint? Id { get; set; }
+  public int? Id { get; set; }
   public string? Url { get; set; }
-  public required string Fingerprint { get; set; }
-  public string? Content { get; set; }
+  public required byte[] Fingerprint { get; set; }
+  public string? TextContent { get; set; }
+  public byte[]? RawContent { get; set; }
+  public string? Format { get; set; }
+  public string? Headline { get; set; }
 }
