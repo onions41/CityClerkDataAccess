@@ -30,7 +30,7 @@ namespace DataAccess.Models;
 
 public class MeetingModel
 {
-  public uint? Id { get; set; }
+  public int? Id { get; set; }
   public required string MunicipalityName { get; set; }
   public required string Type { get; set; }
   public required DateTime Date { get; set; }
