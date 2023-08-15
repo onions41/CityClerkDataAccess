@@ -6,7 +6,9 @@
   );
 */
 
+namespace DataAccess.Models;
+
 public class VideoModel {
-  public uint? Id { get; set; }
+  public int? Id { get; set; }
   public required string Url { get; set; }
 }
