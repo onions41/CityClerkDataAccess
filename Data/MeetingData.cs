@@ -32,16 +32,19 @@ public class MeetingData : IMeetingData
       return results.FirstOrDefault();
    }
 
-   public async Task<int?> InsertMeeting(MeetingModel meeting) {
+   public async Task<int> InsertMeeting(MeetingModel meeting) {
       const string statement = """
                                  INSERT INTO meetings (municipality_name, type, date, url)
-                                 VALUES (@MunicipalityName, @Type, @Date, @Url);
+                                 VALUES (@MunicipalityName, @Type, @Date, @Url) 
+                                 RETURNING id;
                                """;
 
-      return await _db.InsertOne(
+      var meetingId = await _db.InsertOne(
          statement,
          meeting,
          "CityClerkDb"
       );
+
+      return meetingId ?? throw new Exception("Impossible. No ID was returned when inserting a meeting");
    }
 }
