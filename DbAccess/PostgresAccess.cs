@@ -13,10 +13,6 @@ public class PostgresAccess : IPostgresAccess
 
    public PostgresAccess(IConfiguration config) {
       _config = config;
-      FluentMapper.Initialize(config => {
-         config.AddConvention<PascalToSnakeConvention>()
-            .ForEntity<MeetingModel>();
-      });
    }
 
    // This gotta be async, so it doesn't lokc up the UIdf
@@ -53,9 +49,18 @@ public class PostgresAccess : IPostgresAccess
    public async Task<int?> InsertOne<T>(
       string statement,
       T parameters,
-      string connectionId = "CityClerkDb"
+      string connectionId = "Default"
    ) {
       await using var connection = new NpgsqlConnection(_config.GetConnectionString(connectionId));
       return await connection.QuerySingleOrDefaultAsync<int?>(statement, parameters);
+   }
+
+   public async Task<T?> QueryOne<T, TParam>(
+      string statement,
+      TParam parameters,
+      string connectionId = "Default"
+   ) {
+      await using var connection = new NpgsqlConnection(_config.GetConnectionString(connectionId));
+      return await connection.QuerySingleOrDefaultAsync<T?>(statement, parameters);
    }
 }
